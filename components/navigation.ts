@@ -18,11 +18,11 @@ export const navigation: Array<Menu> = [
   {
     title: 'My Kids',
     icon: 'mdi-account-child',
-    to: '/children'
+    to: 'children'
   },
   {
     title: 'About',
     icon: 'mdi-information',
-    to: '/about'
+    to: 'about'
   }
 ]

@@ -1,13 +1,17 @@
 <template>
-  <v-app-bar :elevation="0"
-    style="border-bottom: 1px solid rgba(var(--v-theme-borderLight), 0.8)"
-  >
+  <v-app-bar :elevation="2" rounded class="rounded-lg rounded-t-0" color="primary">
     <template v-slot:prepend>
-      <v-app-bar-nav-icon @click.stop="sidebar.show = !sidebar.show"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click.stop="toggleSidebar"></v-app-bar-nav-icon>
       <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
     </template>
     <!-- <img src="/logo.svg" alt="Julia" style="padding: 0.25rem; height: inherit;"/> -->
-    <v-app-bar-title>Welkom</v-app-bar-title>
+    <NuxtLink to="/" style="text-decoration: none; color: inherit; height: inherit;">
+      <div class="d-flex align-center" style="height: inherit;">
+        <img src="/logo.svg" alt="Julia" class="pa-2" style="height: inherit;"/>
+        <v-app-bar-title>Europascouts</v-app-bar-title>
+      </div>
+    </NuxtLink>
+    <!-- <v-app-bar-title>Welkom</v-app-bar-title> -->
     <v-spacer />
     <v-btn
       icon
@@ -56,8 +60,18 @@
   </v-app-bar>
 </template>
 
-<script setup>
+<script setup lang="ts">
   import { useSidebar } from '~/composables/layout';
-
+  import { useDisplay } from 'vuetify';
+  
   const sidebar = useSidebar()
+  const { mobile } = useDisplay()
+  
+  watch(mobile, () => mobile.value && (sidebar.value.mini = false))
+
+  const toggleSidebar = (event: MouseEvent) => {
+    (mobile.value)
+      ? sidebar.value.show = !sidebar.value.show
+      : sidebar.value.mini = !sidebar.value.mini
+  }
 </script>

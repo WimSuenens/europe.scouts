@@ -1,22 +1,32 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
+// import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
+  ssr: false,
   devtools: { enabled: true },
   build: {
     transpile: [
       "vuetify",
+      "trpc-nuxt",
     ]
   },
+  typescript: {
+    strict: true,
+    shim: false
+  },
+  nitro: {
+    serveStatic: true
+  },
   modules: [
+    // "@prisma/nuxt",
     // '@pinia/nuxt',
-    (_options, nuxt) => {
-      nuxt.hooks.hook('vite:extendConfig', (config) => {
-        // @ts-expect-error
-        config.plugins.push(vuetify({ autoImport: true }))
-      })
-    },
+    // (_options, nuxt) => {
+    //   nuxt.hooks.hook('vite:extendConfig', (config) => {
+    //     // @ts-expect-error
+    //     config.plugins.push(vuetify({ autoImport: true }))
+    //   })
+    // },
     //...
   ],
   vite: {
@@ -28,11 +38,11 @@ export default defineNuxtConfig({
         }
       }
     },
-    vue: {
-      template: {
-        transformAssetUrls,
-      },
-    },
+    // vue: {
+    //   template: {
+    //     transformAssetUrls,
+    //   },
+    // },
   },
   app: {
     head: {
@@ -40,5 +50,9 @@ export default defineNuxtConfig({
       link: [{ rel: 'icon', type: 'image/svg', href: "/logo.svg" }]
     }
   },
-  css: ['~/assets/scss/main.scss'],
+  css: [
+    'vuetify/styles',
+    '@mdi/font/css/materialdesignicons.css',
+    '~/assets/scss/main.scss'
+  ],
 })

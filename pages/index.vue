@@ -1,13 +1,15 @@
 <template>
-  <v-btn @click="toggleTheme">toggle theme</v-btn>
+  <v-container>
+    <v-btn @click="toggleTheme">toggle theme</v-btn>
+  </v-container>
 </template>
 
 <script setup>
 import { useTheme } from 'vuetify'
 
-// definePageMeta({
-//   layout: "layout",
-// })
+definePageMeta({
+  layout: "default",
+})
 
 const theme = useTheme()
 

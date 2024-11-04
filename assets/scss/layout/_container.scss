@@ -1,15 +1,15 @@
 .page-wrapper {
   background: rgb(var(--v-theme-containerBg));
-  .v-container {
-    &:first-child {
-      min-height: calc(100vh - 139px);
-    }
-    padding: 15px;
-    @media (max-width: 1550px) {
-      max-width: 100%;
-    }
-    @media (min-width: 768px) {
-      padding-inline: 40px;
-    }
-  }
+  // .v-container {
+  //   &:first-child {
+  //     min-height: calc(100vh - 139px);
+  //   }
+  //   padding: 15px;
+  //   @media (max-width: 1550px) {
+  //     max-width: 100%;
+  //   }
+  //   @media (min-width: 768px) {
+  //     padding-inline: 40px;
+  //   }
+  // }
 }

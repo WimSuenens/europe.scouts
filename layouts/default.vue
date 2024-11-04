@@ -1,14 +1,15 @@
 <template>
-  <v-locale-provider>
-    <v-app :class="[]">
-      <AppSidebar/>
+  <v-app style="background: rgba(222, 222, 222, 0.8);">
+    <v-locale-provider>
       <AppHeader/>
-      <v-main class="page-wrapper">
-        <slot />
-      </v-main>
-
-    </v-app>
-  </v-locale-provider>
+      <v-container>
+        <AppSidebar/>
+        <v-main>
+          <slot />
+        </v-main> 
+      </v-container>
+    </v-locale-provider>
+  </v-app>
 
   <!-- 
   <v-app-bar :elevation="2" color="primary">

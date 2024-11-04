@@ -73,3 +73,9 @@ bun run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+
+# Samples
+
+https://spike-nuxtjs-pro-main.netlify.app/dashboards/dashboard1
+https://berrydashboard.io/vue/free/
+https://mantisdashboard.io/vue/free/dashboard

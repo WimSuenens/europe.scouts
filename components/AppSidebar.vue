@@ -1,22 +1,26 @@
 <template>
-  <v-navigation-drawer
-    left
-    v-model="sidebar.show"
-    elevation="0"
+  <!--
     rail-width="60"
-    mobile-breakpoint="lg"
-    app
-    class="leftSidebar"
     :rail="sidebar.mini"
     expand-on-hover
     style="border-right: 1px solid rgba(var(--v-theme-borderLight), 0.8)"
+  -->
+  <v-navigation-drawer
+    v-model="sidebar.show"
+    :rail="sidebar.mini"
+    expand-on-hover
+    elevation="4"
+    rounded
+    :class="sidebar.show ? 'mx-2 my-2' : 'my-2'"
+    style="height: auto; border-right-width: 0;"
+    mobile-breakpoint="lg"
   >
-    <NuxtLink to="/about" style="text-decoration: none; color: inherit;">
+    <!-- <NuxtLink to="/" style="text-decoration: none; color: inherit;">
       <div class="d-flex align-center">
         <img src="/logo.svg" alt="Julia" style="padding: 0.25rem; height: 64px;"/>
         <v-app-bar-title>Europascouts</v-app-bar-title>
       </div>
-    </NuxtLink>
+    </NuxtLink> -->
 
     <v-list>
       <v-list-item v-for="(item , i) in navigationMenu" :key="i"
@@ -37,7 +41,7 @@
 <script setup>
   import { useSidebar } from '~/composables/layout';
   import { navigation } from './navigation';
-  
+
   const sidebar = useSidebar()
   const navigationMenu = shallowRef(navigation)
 </script>

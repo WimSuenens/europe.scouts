@@ -1,5 +1,11 @@
 <template>
-  <div>
+  <v-container>
     About
-  </div>
+  </v-container>
 </template>
+
+<script>
+definePageMeta({
+  layout: "default",
+})
+</script>
