@@ -1,13 +1,22 @@
 <template>
-  <v-app style="background: rgba(222, 222, 222, 0.8);">
+  <v-app :class="mobile ? 'pa-2' : '' ">
     <v-locale-provider>
       <AppHeader/>
-      <v-container>
-        <AppSidebar/>
-        <v-main>
-          <slot />
-        </v-main> 
-      </v-container>
+      <AppSidebar/>
+      <!-- <v-main :class="mobile ? 'ma-4' : '' ">
+        <slot />
+      </v-main>  -->
+      <v-main
+        class="my-2"
+        :style="!mobile ? (!sidebar.mini ? '--v-layout-left: calc(256px + 1rem);' : '--v-layout-left: calc(56px + 1rem);') : ''"
+      >
+        <slot />
+      </v-main> 
+      <!-- <v-container>
+        <div>
+          <slot/>
+        </div>
+      </v-container> -->
     </v-locale-provider>
   </v-app>
 
@@ -34,6 +43,10 @@
 
 <script setup>
   import { ref, watch } from 'vue'
+  import { useDisplay } from 'vuetify';
+
+  const { mobile } = useDisplay();
+  const sidebar = useSidebar();
 
   const drawer = ref(false);
   const items = ref([

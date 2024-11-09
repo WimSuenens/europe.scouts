@@ -3,3 +3,7 @@
 .v-list-item--active {
   border-right: 2px solid rgb(var(--v-theme-primary));
 }
+
+.v-navigation-drawer__scrim {
+  position: fixed;
+}

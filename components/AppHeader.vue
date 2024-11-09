@@ -1,5 +1,10 @@
 <template>
-  <v-app-bar :elevation="2" rounded class="rounded-lg rounded-t-0" color="primary">
+  <v-app-bar :elevation="2"
+    rounded floating
+    :class="mobile ? 'rounded-pill' : 'rounded-lg rounded-t-0'"
+    :style="mobile ? 'top: 0.5rem; left: 0.5rem; width: calc(100% - 1rem);' : ''"
+    color="primary"
+  >
     <template v-slot:prepend>
       <v-app-bar-nav-icon @click.stop="toggleSidebar"></v-app-bar-nav-icon>
       <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->

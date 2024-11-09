@@ -11,6 +11,7 @@
     expand-on-hover
     elevation="4"
     rounded
+    :style="mobile ? (sidebar.show ? 'top: calc(64px + 0.5rem);' : 'top: calc(64px + 0.5rem); transform: translateX(calc(-256px - 1rem));') : ''"
     :class="sidebar.show ? 'mx-2 my-2' : 'my-2'"
     style="height: auto; border-right-width: 0;"
     mobile-breakpoint="lg"
@@ -41,7 +42,10 @@
 <script setup>
   import { useSidebar } from '~/composables/layout';
   import { navigation } from './navigation';
+  import { useDisplay } from 'vuetify';
 
   const sidebar = useSidebar()
   const navigationMenu = shallowRef(navigation)
+  const { mobile } = useDisplay();
+
 </script>

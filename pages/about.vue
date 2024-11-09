@@ -1,7 +1,7 @@
 <template>
-  <v-container>
+  <div class="ma-4">
     About
-  </v-container>
+  </div>
 </template>
 
 <script>
