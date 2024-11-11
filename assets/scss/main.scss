@@ -1,5 +1,9 @@
 @use './layout/container';
 
+body {
+  background: rgba(222, 222, 222, 0.8);
+}
+
 .v-list-item--active {
   border-right: 2px solid rgb(var(--v-theme-primary));
 }

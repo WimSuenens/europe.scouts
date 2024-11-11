@@ -8,12 +8,18 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "prisma:migrate:reset": "npx prisma migrate reset",
+    "prisma:migrate:dev": "npx prisma migrate dev",
+    "prisma:generate": "npx prisma generate",
+    "prisma:studio": "npx prisma studio"
   },
   "dependencies": {
+    "@prisma/client": "^5.22.0",
     "@trpc/client": "^10.45.2",
     "@trpc/server": "^10.45.2",
     "nuxt": "^3.13.2",
+    "prisma": "^5.22.0",
     "trpc-nuxt": "^0.10.22",
     "vue": "latest",
     "vuetify": "^3.7.3",

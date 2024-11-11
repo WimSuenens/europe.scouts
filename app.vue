@@ -9,7 +9,7 @@
 </style>
 
 <template>
-  <NuxtLayout style="background: rgba(222, 222, 222, 0.8);">
+  <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
 </template>

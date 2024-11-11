@@ -1,5 +1,5 @@
 <template>
-  <v-app :class="mobile ? 'pa-2' : '' ">
+  <v-app :class="!mobile ? 'pa-2' : '' ">
     <v-locale-provider>
       <AppHeader/>
       <AppSidebar/>
