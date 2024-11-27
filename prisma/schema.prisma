@@ -1,12 +1,15 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+// https://next-auth.js.org/v3/adapters/prisma-legacy
+
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
+  // provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -64,51 +67,52 @@ datasource db {
 
 // https://dev.to/carstenlebek/credentials-authentication-with-database-sessions-using-authjs-sveltekit-and-prisma-2epm
 
-model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  // refresh_token      String?  @db.Text
-  // access_token       String?  @db.Text
-  refresh_token      String?  @unique
-  access_token       String?  @unique
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @unique
-  session_state      String?
+// model Account {
+//   id                 String  @id @default(cuid())
+//   userId             String
+//   type               String
+//   provider           String
+//   providerAccountId  String
+//   // refresh_token      String?  @db.Text
+//   // access_token       String?  @db.Text
+//   refresh_token      String?  @unique
+//   access_token       String?  @unique
+//   expires_at         Int?
+//   token_type         String?
+//   scope              String?
+//   id_token           String?  @unique
+//   session_state      String?
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([provider, providerAccountId])
-}
+//   @@unique([provider, providerAccountId])
+// }
 
-model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
+// model Session {
+//   id           String   @id @default(cuid())
+//   sessionToken String   @unique
+//   userId       String
+//   expires      DateTime
+//   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+// }
 
 model User {
   id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
+  firstname     String?
+  lastname      String?
+  email         String    @unique
+  verified      DateTime?
+  // image         String?
+  // accounts      Account[]
+  // sessions      Session[]
   // username      String?   @unique
-  // password      String?
+  password      String?
 }
 
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
+// model VerificationToken {
+//   identifier String
+//   token      String   @unique
+//   expires    DateTime
 
-  @@unique([identifier, token])
-}
+//   @@unique([identifier, token])
+// }

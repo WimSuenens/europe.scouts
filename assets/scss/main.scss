@@ -1,7 +1,23 @@
 @use './layout/container';
 
-body {
-  background: rgba(222, 222, 222, 0.8);
+// https://stackoverflow.com/questions/73691720/change-default-font-nuxt-3-vuetify-3-project#:~:text=You%20can%20change%20the%20font,described%20in%20the%20Vuetify%20documentation.&text=And%20in%20assets%2Fsettings.
+/* main.css */
+// @font-face {
+//   font-family: 'Roboto';
+//   font-style: normal;
+//   font-weight: 300;
+//   font-display: swap;
+//   src: url('./fonts/Roboto-Light.ttf') format('truetype');
+// }
+
+html {
+  // min-height: 100dvh;
+  background: #f0f0e5;
+  // background-image: linear-gradient(to top right, #B2DFDB, #004D40);
+}
+
+.v-application {
+  background: transparent;
 }
 
 .v-list-item--active {

@@ -79,3 +79,5 @@ Check out the [deployment documentation](https://nuxt.com/docs/getting-started/d
 https://spike-nuxtjs-pro-main.netlify.app/dashboards/dashboard1
 https://berrydashboard.io/vue/free/
 https://mantisdashboard.io/vue/free/dashboard
+https://www.youtube.com/watch?v=eCnN4Ahv5B4
+https://authjs.dev/getting-started/adapters/prisma

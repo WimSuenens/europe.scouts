@@ -1,17 +1,23 @@
 <template>
-  <v-app :class="!mobile ? 'pa-2' : '' ">
+  <v-app :class="!mobile && false ? 'pa-2' : '' ">
     <v-locale-provider>
       <AppHeader/>
       <AppSidebar/>
       <!-- <v-main :class="mobile ? 'ma-4' : '' ">
         <slot />
       </v-main>  -->
-      <v-main
-        class="my-2"
-        :style="!mobile ? (!sidebar.mini ? '--v-layout-left: calc(256px + 1rem);' : '--v-layout-left: calc(56px + 1rem);') : ''"
+      <slot />
+      <!-- <v-main
+        :style="!mobile
+          ? (
+            !sidebar.mini
+              ? '--v-layout-left: calc(256px + 1rem);'
+              : '--v-layout-left: calc(56px + 1rem);'
+            )
+          : ''"
       >
         <slot />
-      </v-main> 
+      </v-main>  -->
       <!-- <v-container>
         <div>
           <slot/>

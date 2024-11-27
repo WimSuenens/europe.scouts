@@ -26,9 +26,8 @@
 		"vscode": {
 			"extensions": [
 				"Vue.volar",
-				// "Prisma.prisma",
-				// "cweijan.vscode-postgresql-client2",
-				// "Vue.vscode-typescript-vue-plugin"
+				"Prisma.prisma",
+				"cweijan.vscode-database-client2"
 			]
 		}
 	}

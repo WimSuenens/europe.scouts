@@ -6,6 +6,7 @@ import { createVuetify, type ThemeDefinition } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import { aliases, mdi } from 'vuetify/iconsets/mdi'
+import { VDateInput } from 'vuetify/labs/VDateInput'
 
 const purpleTheme: ThemeDefinition = {
   dark: false,
@@ -82,6 +83,7 @@ const purpleTheme: ThemeDefinition = {
     'card-shadow': '0px 1px 4px rgba(0, 0, 0, 0.08)'
   },
   colors: {
+    // background: 'linear-gradient(to top right, #B2DFDB, #004D40)',
     // primary: '#1677ff',
     primary: '#1867c0',
     secondary: '#8c8c8c',
@@ -113,11 +115,26 @@ const purpleTheme: ThemeDefinition = {
   }
 }
 
+import { nl } from 'vuetify/locale'
+
 export default defineNuxtPlugin((app) => {
   const vuetify = createVuetify({
     // ... your configuration
     ssr: true,
-    components,
+    locale: {
+      locale: 'nl',
+      messages: { nl },
+    },
+    date: {
+      locale: {
+        nl: 'nl-NL',
+      },
+    },  
+    // components,
+    components: {
+      ...components,
+      VDateInput
+    },
     directives,
     theme: {
       defaultTheme: 'purpleTheme',
