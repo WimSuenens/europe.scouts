@@ -1,6 +1,6 @@
 <template>
   <PageContainer>
-    My Kids
+    Shopping
   </PageContainer>
 </template>
 

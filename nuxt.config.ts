@@ -14,18 +14,22 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      title: 'Home | Europascouts',
+      title: 'Home | Scouts & Guides of Europe',
       link: [{ rel: 'icon', type: 'image/svg', href: "/logo.svg" }]
     }
   },
 
   runtimeConfig: {
+    admin: {
+      password: '' // overwrite with NUXT_ADMIN_PASSWORD
+    },
     session: {
       password: '' // overwrite with NUXT_SESSION_PASSWORD
     },
-    
     mail: {
-      host: '', // overwrite with NUXT_MAIL_HOST,
+      host: 'papercut', // overwrite with NUXT_MAIL_HOST,
+      port: 25, // overwrite with NUXT_MAIL_PORT,
+      secure: false, // overwrite with NUXT_MAIL_SECURE,
       user: '', // overwrite with NUXT_MAIL_USER,
       password: '', // overwrite with NUXT_MAIL_PASSWORD,
     }
@@ -49,5 +53,18 @@ export default defineNuxtConfig({
     ]
   },
 
-  modules: ['@vueuse/nuxt'],
+  modules: ['@vueuse/nuxt', '@nuxtjs/i18n'],
+  i18n: {
+    vueI18n: './i18n.config.ts', // default
+    // strategy: 'prefix',
+    strategy: 'prefix_and_default',
+    defaultLocale: 'fr',
+    locales: ['en', 'nl', 'fr'],
+    // skipSettingLocaleOnNavigate: true,
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+      redirectOn: 'root', // recommended
+    },
+  }
 })

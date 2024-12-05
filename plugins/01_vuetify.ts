@@ -120,7 +120,7 @@ import { nl } from 'vuetify/locale'
 export default defineNuxtPlugin((app) => {
   const vuetify = createVuetify({
     // ... your configuration
-    ssr: true,
+    ssr: false,
     locale: {
       locale: 'nl',
       messages: { nl },

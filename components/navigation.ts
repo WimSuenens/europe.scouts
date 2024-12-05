@@ -14,12 +14,20 @@ export interface Menu {
   // subCaption?: string;
 }
 
-export const navigation: Array<Menu> = [
+export const topNavigation: Array<Menu> = [
   {
     title: 'My Kids',
     icon: 'mdi-account-child',
     to: 'children'
   },
+  {
+    title: 'Shop',
+    icon: 'mdi-cart',
+    to: 'shopping'
+  },
+]
+
+export const bottomNavigation: Array<Menu> = [
   {
     title: 'About',
     icon: 'mdi-information',

@@ -17,7 +17,7 @@ export type AuthType<T extends PropertyKey> = { [K in T]: {
 
 declare module "#app" {
   interface PageMeta {
-    auth?: AuthType<AuthStatus>;
+    auth?: { accepted: Array<AuthStatus> } | AuthType<AuthStatus>;
     // roleNeeded?: string[];
   }
 }

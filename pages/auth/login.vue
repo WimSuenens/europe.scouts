@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { AuthStatus } from '~/types';
+const { t } = useI18n()
 
 definePageMeta({
   layout: "landing",
@@ -10,11 +11,13 @@ definePageMeta({
       ONBOARDING: '/auth/onboarding',
       AUTHENTICATED: '/'
     }
-  }
+  },
 })
+useHead({ title: `${t('label.login')} | ${t('federation')}` })
 
 const { $client } = useNuxtApp()
 const { redirectedFrom } = useRoute()
+const localePath = useLocalePath()
 
 const form = reactive({
   email: '',
@@ -29,19 +32,45 @@ const rules = reactive({
   ],
   password: [
     (v: string) => !!v || 'Password is required',
-    (v: string) => (v && v.length >= 10) || 'Password must be at least 10 characters'
   ]
 })
 
+const { value: snackbar } = useSnackbar()
+
+// const snackbar = reactive({
+//   show: false,
+//   text: '',
+// })
+// const snackbar = ref(false)
+// const text = ref(`Hello, I'm a snackbar`)
+
 async function submit($event: SubmitEvent) {
   $event.preventDefault()
-  var user = await $client.auth.login.mutate(form)
-  await navigateTo(redirectedFrom?.fullPath ?? '/')
+  const response = await $client.auth.login.mutate(form)
+  if (!('error' in response)) {
+    // await navigateTo(redirectedFrom?.fullPath ?? '/verify')
+    await navigateTo(localePath('/auth/verification'));
+  } else {
+    snackbar.text = response.error
+    snackbar.show = true
+  }
 }
 </script>
 
+<!-- <style scoped>
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 3s;
+}
+.page-enter,
+.page-leave-active {
+  opacity: 0;
+}
+</style> -->
+
 <template>
-  <LandingPage title="Login">
+  <LandingPage :title="$t('label.login')">
+
     <div>
       <!-- <v-row>
         <v-col class="ma-auto">
@@ -67,7 +96,7 @@ async function submit($event: SubmitEvent) {
         <v-row>
           <v-col class="ma-auto">
             <v-text-field v-model="form.email"
-              label="E-mail" required
+              :label="$t('label.email')" required
               :rules="rules.email"
             >
             </v-text-field>
@@ -76,7 +105,7 @@ async function submit($event: SubmitEvent) {
         <v-row>
           <v-col class="ma-auto">
             <v-text-field v-model="form.password"
-              label="Password" required
+              :label="$t('label.password')" required
               :type="form.show ? 'text' : 'password'"
               :rules="rules.password"
               :append-icon="form.show ? 'mdi-eye' : 'mdi-eye-off'"
@@ -87,10 +116,10 @@ async function submit($event: SubmitEvent) {
         </v-row>
         <v-row>
           <v-col class="ma-auto" cols="12" sm="6">
-            <NuxtLink to="/auth/forgot">Forgot your password?</NuxtLink>
+            <NuxtLink :to="localePath('/auth/forgot')">{{ $t('auth.forgot')}}</NuxtLink>
           </v-col>
           <v-col class="ma-auto" cols="12" sm="6">
-            <v-btn color="primary" type="submit" block>Login</v-btn>
+            <v-btn color="primary" type="submit" block>{{ $t('label.login') }}</v-btn>
           </v-col>
         </v-row>
       </v-form>
@@ -103,8 +132,8 @@ async function submit($event: SubmitEvent) {
 
       <v-row>
         <v-col>
-          <span>Not yet registered? </span>
-          <NuxtLink to="/auth/register">Create an account</NuxtLink>
+          <span>{{ $t('auth.registered_not') }}&nbsp;</span>
+          <NuxtLink :to="localePath('/auth/register')">{{ $t('auth.create') }}</NuxtLink>
         </v-col>
       </v-row>
     </div>

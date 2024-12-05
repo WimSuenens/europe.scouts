@@ -7,11 +7,13 @@ export default defineEventHandler(async (event) => {
    * Set 'user' on the context
    */
   if (!!session.data.userId) {
-    const { context, context: { prisma }} = event
-    const user = await prisma.user.findUnique({ where: { id: session.data.userId }})
+    const { context, context: { $prisma }} = event
+    const user = await $prisma.user.findUnique({ where: { id: session.data.userId }})
+    const person = await $prisma.person.findFirst({ where: { user: { id: session.data.userId}}})
     if (user) {
       const { password, ...userInfo } = user
       context.user = userInfo
+      context.person = person
     }
   }
 

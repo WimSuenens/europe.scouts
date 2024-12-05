@@ -1,29 +1,34 @@
-import type { User } from "@prisma/client";
+// import type { Person, User } from "@prisma/client";
+// import type { Mailer } from "./lib/mailer";
+// import type { PrismaClient } from "@prisma/client/extension";
 
-export type Session = {
-  userId: string,
-  verification?: {
-    code: number,
-    validity: number,
-  }
-};
+// export type Session = {
+//   userId: string,
+//   verification?: {
+//     code: number,
+//     validity: number,
+//   }
+// };
 
-type SessionDataT = Record<string, any>;
-type SessionData<T extends SessionDataT = SessionDataT> = T;
-type SessionUpdate<T extends SessionDataT = SessionDataT> = Partial<SessionData<T>> | ((oldData: SessionData<T>) => Partial<SessionData<T>> | undefined);
+// type SessionDataT = Record<string, any>;
+// type SessionData<T extends SessionDataT = SessionDataT> = T;
+// type SessionUpdate<T extends SessionDataT = SessionDataT> = Partial<SessionData<T>> | ((oldData: SessionData<T>) => Partial<SessionData<T>> | undefined);
 
-declare module 'h3' {
-  interface H3EventContext {
-    session: {
-      readonly id: string | undefined;
-      readonly data: Session;
-      update: (update: SessionUpdate<Session>) => Promise<any>;
-      // update: (update: Session) => Promise<any>;
-      clear: () => Promise<any>;
-    }
-    user: Omit<User, 'password'>
-  }
-}
+// declare module 'h3' {
+//   interface H3EventContext {
+//     session: {
+//       readonly id: string | undefined;
+//       readonly data: Session;
+//       update: (update: SessionUpdate<Session>) => Promise<any>;
+//       // update: (update: Session) => Promise<any>;
+//       clear: () => Promise<any>;
+//     }
+//     user: Omit<User, 'password'>
+//     person?: Person | null
+//     $mailer: Mailer
+//     $prisma: PrismaClient
+//   }
+// }
 
 // https://nuxt.com/docs/guide/directory-structure/pages/#typing-custom-metadata
 // declare module 'vue-router' {
@@ -47,6 +52,8 @@ declare module 'h3' {
 
 // type MailConfig = {
 //   host: string
+//   port: number
+//   secure: boolean
 //   user: string
 //   password: string
 // }

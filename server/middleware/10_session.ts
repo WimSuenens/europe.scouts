@@ -1,14 +1,14 @@
-import { Session } from "~/session"
+import { Session } from "~/types"
 
 export default defineEventHandler(async (event) => {
   const { session: { password }} = useRuntimeConfig(event)
   const session = await useSession<Session>(event, {
-    name: "my-session",
+    name: "nuxt-europe-scouts",
     password,
     cookie: {
       httpOnly: true,
       secure: true,
-      sameSite: "strict" as "strict",
+      sameSite: "lax",
     },
     maxAge: 60 * 60 * 24 * 7, // 7 days
   })

@@ -97,16 +97,54 @@ datasource db {
 // }
 
 model User {
-  id            String    @id @default(cuid())
-  firstname     String?
-  lastname      String?
-  email         String    @unique
+  id            String        @id @default(cuid())
+  // firstname     String?
+  // lastname      String?
+  email         String        @unique
   verified      DateTime?
   // image         String?
   // accounts      Account[]
   // sessions      Session[]
-  // username      String?   @unique
+  // username      String?    @unique
   password      String?
+
+  person        Person?
+
+  // person        Person?       @relation(fields: [personId], references: [id]) // references `id` of `Person`
+  // personId      String?       @unique // relation scalar field (used in the `@relation` attribute above)
+
+
+}
+
+model Person {
+  id            String        @id @default(cuid())
+  firstname     String
+  lastname      String
+
+  date_of_birth DateTime?
+  gender        Gender
+
+  address       Address?      @relation(fields: [addressId], references: [id]) // references `id` of `User`
+  addressId     String?       @unique // relation scalar field (used in the `@relation` attribute above)
+
+  user          User?         @relation(fields: [userId], references: [id]) // references `id` of `Person`
+  userId        String?       @unique // relation scalar field (used in the `@relation` attribute above)
+
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+model Address {
+  id            String        @id @default(cuid())
+  street        String
+  zip           String
+  community     String
+  country       String
+
+  person        Person?         
 }
 
 // model VerificationToken {

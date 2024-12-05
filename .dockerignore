@@ -1,0 +1,32 @@
+# .dockerignore
+# /.nuxt
+# /.output
+# /node_modules
+
+# Dependency directories
+node_modules
+npm-debug.log
+
+# Build output
+.nuxt
+dist
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Version control
+.git
+.gitignore
+
+# Misc
+.DS_Store
+*.pem
+README.md
+
+# Prisma
+prisma/*.db
+prisma/*.db-journal

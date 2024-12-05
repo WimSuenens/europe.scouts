@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { AuthStatus } from '~/types';
+const { t } = useI18n()
 
 definePageMeta({
   layout: "landing",
@@ -12,6 +13,9 @@ definePageMeta({
     }
   }
 })
+const localePath = useLocalePath()
+useHead({ title: `${t('auth.verify')} | ${t('federation')}` })
+
 // https://vuetifyjs.com/en/components/otp-input/#card-variants
 const { $client } = useNuxtApp()
 const { redirectedFrom } = useRoute()
@@ -41,17 +45,24 @@ async function submit($event: SubmitEvent) {
   loading.value = true
   const { success } = await $client.auth.verify.mutate(form)
   loading.value = false
-  !!success && await navigateTo(redirectedFrom?.fullPath ?? '/')
+  !!success && await navigateTo(localePath('/auth/onboarding'))
 }
 </script>
 
 <template>
-  <LandingPage title="Verification">
+  <LandingPage :title="$t('auth.verify')">
     <v-row>
       <v-col class="ma-auto">
         <v-divider class="border-opacity-25"></v-divider>
       </v-col>
     </v-row>
+
+    <v-row>
+      <v-col class="ma-auto">
+        <p class="text-body-1">{{ $t('auth.verification') }}</p>
+      </v-col>
+    </v-row>
+
     <v-form @submit.stop.prevent="submit" class="my-3">
       <v-row>
         <v-col class="ma-auto">
@@ -59,21 +70,14 @@ async function submit($event: SubmitEvent) {
             label="Code" length="6" required :loading="loading"
           >
           </v-otp-input>
-
-          <!-- <v-text-field v-model="form.code"
-            type="number"
-            label="Code" required
-            :rules="rules.code"
-          >
-          </v-text-field> -->
         </v-col>
       </v-row>
       <v-row>
         <v-col class="ma-auto" cols="12" sm="6">
-          <v-btn color="secondary" @click="resend" block>Resend</v-btn>
+          <v-btn color="secondary" @click="resend" block>{{ $t('label.resend') }}</v-btn>
         </v-col>
         <v-col class="ma-auto" cols="12" sm="6">
-          <v-btn color="primary" type="submit" block>Confirm</v-btn>
+          <v-btn color="primary" type="submit" block>{{ $t('label.confirm') }}</v-btn>
         </v-col>
       </v-row>
     </v-form>

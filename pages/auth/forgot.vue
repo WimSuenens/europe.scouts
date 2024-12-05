@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { AuthStatus } from '~/types';
+const localePath = useLocalePath()
+const { t } = useI18n()
 
 definePageMeta({
   layout: "landing",
@@ -11,6 +13,10 @@ definePageMeta({
       AUTHENTICATED: '/'
     }
   }
+})
+
+useHead({
+  title: `${t('auth.forgot')} | ${t('federation')}`
 })
 
 const { $client } = useNuxtApp()
@@ -29,7 +35,7 @@ async function submit($event: SubmitEvent) {
 </script>
 
 <template>
-  <LandingPage title="Forgot your password?">
+  <LandingPage :title="$t('auth.forgot')">
     <v-row>
       <v-col class="ma-auto">
         <v-divider class="border-opacity-25"></v-divider>
@@ -39,9 +45,7 @@ async function submit($event: SubmitEvent) {
     <v-row>
       <v-col class="ma-auto">
         <!-- <p class="text-h5">Forgot your password?</p> -->
-        <p class="text-caption">Please enter the email address associated with your account and we will email you a link to reset your password.</p>
-        <div>
-        </div>
+        <p class="text-body-1">{{ $t('auth.forgot_help') }}</p>
       </v-col>
     </v-row>
 
@@ -49,7 +53,7 @@ async function submit($event: SubmitEvent) {
         <v-row>
           <v-col class="ma-auto">
             <v-text-field v-model="email"
-              label="E-mail" required
+              :label="$t('label.email')" required
               :rules="emailRules"
             >
             </v-text-field>
@@ -58,10 +62,10 @@ async function submit($event: SubmitEvent) {
         
         <v-row>
           <v-col class="ma-auto">
-            <NuxtLink to="/auth/login">Try to login?</NuxtLink>
+            <NuxtLink :to="localePath('/auth/login')">{{ $t('auth.tologin') }}</NuxtLink>
           </v-col>
           <v-col class="ma-auto" cols="6">
-            <v-btn color="primary" type="submit" block>Reset</v-btn>
+            <v-btn color="primary" type="submit" block>{{ $t('label.reset') }}</v-btn>
           </v-col>
         </v-row>
 
@@ -75,14 +79,10 @@ async function submit($event: SubmitEvent) {
 
       <v-row>
         <v-col>
-          <span>Not yet registered? </span>
-          <NuxtLink to="/auth/register">Create an account</NuxtLink>
+          <span>{{ $t('auth.registered_not') }}&nbsp;</span>
+          <NuxtLink :to="localePath('/auth/register')">{{ $t('auth.create') }}</NuxtLink>
         </v-col>
       </v-row>
 
   </LandingPage>
-  <!-- <div class="d-flex align-center flex-grow-1">
-    <v-container>
-    </v-container>
-  </div> -->
 </template>

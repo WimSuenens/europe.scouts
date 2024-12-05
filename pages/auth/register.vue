@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { AuthStatus } from '~/types';
+const { t } = useI18n()
+const localePath = useLocalePath()
 
 definePageMeta({
   layout: "landing",
@@ -13,11 +15,11 @@ definePageMeta({
   }
 })
 
+useHead({ title: `${t('auth.create')} | ${t('federation')}` })
+
 const { $client } = useNuxtApp()
 
 const form = reactive({
-  // firstname: '',
-  // lastname: '',
   email: '',
   password: '',
   password_show: false,
@@ -26,12 +28,6 @@ const form = reactive({
 })
 
 const rules = reactive({
-  // firstname: [
-  //   (v: string) => !!v || 'Firstname is required',
-  // ],
-  // lastname: [
-  //   (v: string) => !!v || 'Lastname is required',
-  // ],
   email: [
     (v: string) => !!v || 'Email is required',
     (v: string) => /.+@.+\..+/.test(v) || 'Email must be valid'
@@ -46,105 +42,82 @@ const rules = reactive({
   ]
 })
 
+const { value: snackbar } = useSnackbar()
+
 async function submit($event: SubmitEvent) {
   try {
-    var user = await $client.auth.register.mutate(form);
-    await navigateTo('/auth/login');
+    const { password_show, password_confirm_show, ...data } = form
+    const response = await $client.auth.register.mutate(data);
+    if (!('error' in response)) {
+      await navigateTo(localePath('/auth/login'));
+    } else {
+      snackbar.text = response.error
+      snackbar.show = true
+    }
   } catch (error) {
     console.error(error)
   }
-  // var user = await $fetch<User>('/api/register', {
-  //   method: 'POST',
-  //   body
-  // })
-  // signIn('credentials', {
-  //   ...credentials,
-  // })
 }
 </script>
 
 <template>
-  <LandingPage title="Register">
+  <LandingPage :title="$t('title.register')">
 
     <v-row>
-        <v-col class="ma-auto">
-          <v-divider class="border-opacity-25"></v-divider>
-        </v-col>
-      </v-row>
+      <v-col class="ma-auto">
+        <v-divider class="border-opacity-25"></v-divider>
+      </v-col>
+    </v-row>
 
     <v-form @submit.stop.prevent="submit" class="my-3">
 
-        <!-- <v-row>
+      <v-row>
+        <v-col class="ma-auto">
+          <v-text-field v-model="form.email"
+            :label="$t('label.email')" required
+            :rules="rules.email"
+          >
+          </v-text-field>
+        </v-col>
+      </v-row>
 
-          <v-col class="ma-auto" cols="12" sm="6">
-            <v-text-field v-model="form.firstname"
-              label="Firstname" required
-              :rules="rules.firstname"
-            >
-            </v-text-field>
-          </v-col>
+      <v-row>
 
-          <v-col class="ma-auto" cols="12" sm="6">
-            <v-text-field v-model="form.lastname"
-              label="Lastname" required
-              :rules="rules.lastname"
-            >
-            </v-text-field>
-          </v-col>
+        <v-col class="ma-auto" cols="12" sm="6">
+          <v-text-field v-model="form.password"
+            :label="$t('label.password')" required
+            :type="form.password_show ? 'text' : 'password'"
+            :rules="rules.password"
+            :append-icon="form.password_show ? 'mdi-eye' : 'mdi-eye-off'"
+            @click:append="form.password_show = !form.password_show"
+          >
+          </v-text-field>
+        </v-col>
 
-        </v-row> -->
-        
-        <v-row>
-          <v-col class="ma-auto">
-            <v-text-field v-model="form.email"
-              label="E-mail" required
-              :rules="rules.email"
-            >
-            </v-text-field>
-          </v-col>
-        </v-row>
+        <v-col class="ma-auto" cols="12" sm="6">
+          <v-text-field v-model="form.password_confirm"
+            :label="$t('label.password_confirm')" required
+            :type="form.password_confirm_show ? 'text' : 'password'"
+            :rules="rules.password_confirm"
+            :append-icon="form.password_confirm_show ? 'mdi-eye' : 'mdi-eye-off'"
+            @click:append="form.password_confirm_show = !form.password_confirm_show"
+          >
+          </v-text-field>
+        </v-col>
 
-        <v-row>
+      </v-row>
+      
+      <v-row>
+        <v-col class="ma-auto" cols="12" sm="6">
+          <span>{{ $t('auth.registered_already') }}&nbsp;</span>
+          <NuxtLink :to="localePath('/auth/login')">{{ $t('label.login') }}</NuxtLink>
+        </v-col>
 
-          <v-col class="ma-auto" cols="12" sm="6">
-            <v-text-field v-model="form.password"
-              label="Password" required
-              :type="form.password_show ? 'text' : 'password'"
-              :rules="rules.password"
-              :append-icon="form.password_show ? 'mdi-eye' : 'mdi-eye-off'"
-              @click:append="form.password_show = !form.password_show"
-            >
-            </v-text-field>
-          </v-col>
-
-          <v-col class="ma-auto" cols="12" sm="6">
-            <v-text-field v-model="form.password_confirm"
-              label="Confirm password" required
-              :type="form.password_confirm_show ? 'text' : 'password'"
-              :rules="rules.password_confirm"
-              :append-icon="form.password_confirm_show ? 'mdi-eye' : 'mdi-eye-off'"
-              @click:append="form.password_confirm_show = !form.password_confirm_show"
-            >
-            </v-text-field>
-          </v-col>
-
-        </v-row>
-        
-        <v-row>
-          <v-col class="ma-auto" cols="12" sm="6">
-            <span>Already registered? </span>
-            <NuxtLink to="/auth/login">Login</NuxtLink>
-          </v-col>
-
-          <v-col class="ma-auto" cols="12" sm="6">
-            <v-btn class="mt-2" color="primary" type="submit" block>Register</v-btn>
-          </v-col>
-        </v-row>
-      </v-form>
+        <v-col class="ma-auto" cols="12" sm="6">
+          <v-btn class="mt-2" color="primary" type="submit" block>{{ $t('label.register') }}</v-btn>
+        </v-col>
+      </v-row>
+    </v-form>
 
   </LandingPage>
-  <!-- <div class="d-flex align-center flex-grow-1">
-    <v-container>
-    </v-container>
-  </div> -->
 </template>
